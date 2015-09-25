@@ -13,7 +13,7 @@ then
     IMAGE_DIR=$1
 fi
 
-OS=`uname -o`
+OS=`uname`
 
 if [ $OS == "Cygwin" ]
 then
@@ -23,15 +23,16 @@ else
 fi
 
 if [ -e $SIFT ]
-then 
+then
 :
 else
     echo "[ToSift] Error: SIFT not found.  Please install SIFT to $BIN_PATH" > /dev/stderr
 fi
 
 for d in `ls -1 $IMAGE_DIR | egrep "jpg$"`
-do 
+do
     pgm_file=$IMAGE_DIR/`echo $d | sed 's/jpg$/pgm/'`
     key_file=$IMAGE_DIR/`echo $d | sed 's/jpg$/key/'`
-    echo "mogrify -format pgm $IMAGE_DIR/$d; $SIFT < $pgm_file > $key_file; rm $pgm_file; gzip -f $key_file"
+    echo "mogrify -format pgm $IMAGE_DIR/$d; $SIFT -v $pgm_file -o $key_file; rm $pgm_file; gzip -fk $key_file"
 done
+

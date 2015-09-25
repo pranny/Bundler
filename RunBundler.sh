@@ -3,7 +3,7 @@
 # RunBundler.sh
 #   copyright 2008 Noah Snavely
 #
-# A script for preparing a set of image for use with the Bundler 
+# A script for preparing a set of image for use with the Bundler
 # structure-from-motion system.
 #
 # Usage: RunBundler.sh [image_dir]
@@ -24,7 +24,8 @@ fi
 
 EXTRACT_FOCAL=$BASE_PATH/bin/extract_focal.pl
 
-OS=`uname -o`
+
+OS=`uname`
 
 if [ $OS == "Cygwin" ]
 then
@@ -47,49 +48,52 @@ fi
 
 # Rename ".JPG" to ".jpg"
 for d in `ls -1 $IMAGE_DIR | egrep ".JPG$"`
-do 
+do
     mv $IMAGE_DIR/$d $IMAGE_DIR/`echo $d | sed 's/\.JPG/\.jpg/'`
 done
 
 # Create the list of images
-find $IMAGE_DIR -maxdepth 1 | egrep ".jpg$" | sort > list_tmp.txt
-$EXTRACT_FOCAL list_tmp.txt
-cp prepare/list.txt .
+find $IMAGE_DIR -maxdepth 1 | egrep ".jpg$" | sort > $IMAGE_DIR/list_tmp.txt
+
+#$EXTRACT_FOCAL list_tmp.txt
+$EXTRACT_FOCAL $IMAGE_DIR $IMAGE_DIR
 
 # Run the ToSift script to generate a list of SIFT commands
 echo "[- Extracting keypoints -]"
-rm -f sift.txt
-$TO_SIFT $IMAGE_DIR > sift.txt 
+rm -f $IMAGE_DIR/sift.txt
+$TO_SIFT $IMAGE_DIR > $IMAGE_DIR/sift.txt
 
+echo "[- Executing SIFT commands -]"
 # Execute the SIFT commands
-sh sift.txt
+sh $IMAGE_DIR/sift.txt
 
 # Match images (can take a while)
 echo "[- Matching keypoints (this can take a while) -]"
-sed 's/\.jpg$/\.key/' list_tmp.txt > list_keys.txt
+sed 's/\.jpg$/\.key/' $IMAGE_DIR/list_tmp.txt > $IMAGE_DIR/list_keys.txt
 sleep 1
-echo $MATCHKEYS list_keys.txt matches.init.txt
-$MATCHKEYS list_keys.txt matches.init.txt
+echo $MATCHKEYS $IMAGE_DIR/list_keys.txt $IMAGE_DIR/matches.init.txt
+$MATCHKEYS $IMAGE_DIR/list_keys.txt $IMAGE_DIR/matches.init.txt
 
-# Generate the options file for running bundler 
+# Generate the options file for running bundler
 mkdir bundle
-rm -f options.txt
+rm -f $IMAGE_DIR/options.txt
 
-echo "--match_table matches.init.txt" >> options.txt
-echo "--output bundle.out" >> options.txt
-echo "--output_all bundle_" >> options.txt
-echo "--output_dir bundle" >> options.txt
-echo "--variable_focal_length" >> options.txt
-echo "--use_focal_estimate" >> options.txt
-echo "--constrain_focal" >> options.txt
-echo "--constrain_focal_weight 0.0001" >> options.txt
-echo "--estimate_distortion" >> options.txt
-echo "--run_bundle" >> options.txt
+echo "--match_table matches.init.txt" >> $IMAGE_DIR/options.txt
+echo "--output bundle.out" >> $IMAGE_DIR/options.txt
+echo "--output_all bundle_" >> $IMAGE_DIR/options.txt
+echo "--output_dir bundle" >> $IMAGE_DIR/options.txt
+echo "--variable_focal_length" >> $IMAGE_DIR/options.txt
+echo "--use_focal_estimate" >> $IMAGE_DIR/options.txt
+echo "--constrain_focal" >> $IMAGE_DIR/options.txt
+echo "--constrain_focal_weight 0.0001" >> $IMAGE_DIR/options.txt
+echo "--estimate_distortion" >> $IMAGE_DIR/options.txt
+echo "--run_bundle" >> $IMAGE_DIR/options.txt
 
 # Run Bundler!
 echo "[- Running Bundler -]"
-rm -f constraints.txt
-rm -f pairwise_scores.txt
-$BUNDLER list.txt --options_file options.txt > bundle/out
+rm -f $IMAGE_DIR/constraints.txt
+rm -f $IMAGE_DIR/pairwise_scores.txt
+$BUNDLER $IMAGE_DIR/list.txt --options_file $IMAGE_DIR/options.txt > $IMAGE_DIR/bundle/out
 
 echo "[- Done -]"
+
