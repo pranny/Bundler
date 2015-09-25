@@ -1,77 +1,55 @@
-This is a modified version of Bundler.
+# README
+This is a modified version of Bundler. Main modification was done in order to compile Bundler on Linux,Windows and Mac with CMake build system generator.
 
-Main modification was done in order to compile Bundler on Linux,
- Windows and Mac with CMake build system generator.
+## Authors : 
+1. [Original code author]  Noah Snavely snavely[AT]cs.cornell.edu
+2. [Initial Cmake port ]	Pierre moulon pmoulon[AT]gmail.com
+3. [Mac Porting]     		Kai Ni http://www.kaini.org/
 
-Authors : 
-[Original code author]  Noah Snavely snavely[AT]cs.cornell.edu
+## Web resources
+1. [Bundler] http://phototour.cs.washington.edu/bundler/
+2. [Windows Porting] http://francemapping.free.fr/Portfolio/Prog3D/BUNDLER.html
+3. [CMake] https://github.com/TheFrenchLeaf/Bundler
+3. [CMake fixes for OS X 10.10.5] https://github.com/pranny/Bundler
 
-[Initial Cmake port ]	Pierre moulon pmoulon[AT]gmail.com
-[Mac Porting]     		Kai Ni http://www.kaini.org/
+---
+# Compilation
 
---------------------
-- Web resources : - 
---------------------
-[Bundler] http://phototour.cs.washington.edu/bundler/
-[CMake version] http://francemapping.free.fr/Portfolio/Prog3D/BUNDLER.html
-				https://github.com/TheFrenchLeaf/Bundler
+## Windows
+Compiled with VS2008.
+### How To Use the CMake build system.
 
-===========================================================================
-Authors : 
-[main author] 		Noah Snavely snavely[AT]cs.cornell.edu
-[Windows Porting] Pierre moulon pmoulon[AT]gmail.com
-[Mac Porting] Kai Ni http://www.kaini.org/
+#### Linux
+1. use makefile in program/main or Cmake.
+2. Note the fact that the compilation will use the following resident libraries :
+* jpeg
+* lapack blas gfortran (included in most lapack distibution)
+* sometimes atlas.
 
-Date : 4 Sept 2010
+#### Mac
+use Cmake.
+1. Install openblas package. If you are using brew just do 
+`brew install openblas`
+2. Cmake Usage :
+* Go to the extracted archive path. 
+* `$ mkdir Output`
+* `$ cd Output`
+* `$ cmake -G "CodeBlocks - Unix Makefiles" ..`
+* `$ make`
+3. Your binaries will be in Output/src !
 
---------------------
-- Web ressources : - 
---------------------
-[Bundler] http://phototour.cs.washington.edu/bundler/
-[windows porting] http://francemapping.free.fr/Portfolio/Prog3D/BUNDLER.html
 
---------------------
--- Compilation  --
---------------------
-
-Windows => compiled with VS2008.
-How To :
-  Use the CMake build system.
-
-Linux => use makefile in program/main or Cmake.
-      => Note the fact that the compilation will use the following resident libraries :
-         - jpeg
-         - lapack blas gfortran (included in most lapack distibution)
-         - sometimes atlas.
-
-Mac => use Cmake.
-
-Install openblas package. If you are using brew just do 
-brew install openblas
-
-=> CMAKE USAGE :
-Go to the extracted archive path. 
-$ mkdir Output
-$ cd Output
-$ cmake -G "CodeBlocks - Unix Makefiles" ..
-$ make
-=> Your binaries will be in Output/src !
-
---------------------
-----  Notes :   ----
---------------------
+### Notes
 Add CMake based build system for BUNDLER.
-  Tested on windows and linux.
+  Tested on windows and linux and OS X 10.10.5
 
 Update minpack from 1.0 to 1.0.3
 
-=> External contributor :
-  Ólafur Haraldsson: Add "Canon Canon EOS-1Ds Mark III" and "Canon Canon EOS 5D Mark II" to
-    extract_focal.pl
+##### External contributor :
+  Ólafur Haraldsson: Add "Canon Canon EOS-1Ds Mark III" and "Canon Canon EOS 5D Mark II" to `extract_focal.pl`
 
-
-============================================================================
---------------------------------------------------------------------------
+---
+# Original README
   Bundler v0.4 User's Manual
     copyright 2008-2009 Noah Snavely (snavely@cs.cornell.edu)
   
@@ -82,16 +60,11 @@ Update minpack from 1.0 to 1.0.3
 
   An html version of this manual is available at 
      http://phototour.cs.washington.edu/bundler/
---------------------------------------------------------------------------
 
-------------
 - Adapated source code to work on linux/windows/mac
 - Read the Readme_Build.txt to know more
-------------
 
-----------------
-What is Bundler?
-----------------
+## What is Bundler?
 
 Bundler is a structure-from-motion system for unordered image
 collections (for instance, images from the Internet). Bundler takes a
@@ -106,18 +79,14 @@ Currently, Bundler has been primarily compiled and tested under Linux
 (though a Windows version for cygwin has also been released).
 
 
------------------
-Conditions of use
------------------
+## Conditions of use
 
 Bundler is distributed under the GNU General Public License.  For
 information on commercial licensing, please contact the authors at the
 contact address below.
 
 
----------------
-What's included
----------------
+## What's included
 
 Included with the binary distribution is the Bundler executable
 (bin/bundler), as well as a number of other utility scripts and
@@ -138,10 +107,7 @@ Finally, included in the bin directory is the 'jhead' program for
 reading Exif tags from JPEG images. Very special thanks to Matthias
 Wandel for putting this useful program in the public domain.
 
-
-----------------
-Before you begin
-----------------
+## Before you begin
 
 You'll first need to download the Bundler distribution from:
 
@@ -163,14 +129,12 @@ The RunBundler.sh script relies on bash and perl being installed.  The
 easiest way to run this script in Windows is through cygwin.
 
 Finally, copy the approximate nearest neighbors (ANN) shared library
-at BASE_PATH/bin/libANN_char.so (Linux/cygwin) or
-BASE_PATH/bin/ann_1.1_char.dll (Windows VS2005) to a location in your
-LD_LIBRARY_PATH (or add BASE_PATH/lib to LD_LIBRARY_PATH).
+at `BASE_PATH/bin/libANN_char.so` (Linux/cygwin) or
+`BASE_PATH/bin/ann_1.1_char.dll` (Windows VS2005) to a location in your
+`LD_LIBRARY_PATH` (or add `BASE_PATH/lib` to `LD_LIBRARY_PATH`).
 
 
----------------
-Running bundler
----------------
+## Running bundler
 
 The easiest way to start using Bundler is to use the included bash
 shell script, RunBundler.sh.  Just execute this script in a directory
@@ -207,7 +171,7 @@ RunBundler.sh script).
 
 Bundler itself is typically invoked as follows:
 
- > bundler list.txt --options_file options.txt
+ > `bundler list.txt --options_file options.txt`
 
 The first argument is the list of images to be reconstructed (created
 with the 'extract_focal.pl' utility).  Next, an options file
@@ -215,10 +179,7 @@ containing settings to be used for the current run is given.
 RunBundler.sh creates an options file that will work in many
 situations.  Common options are described later in this document.
 
-
--------------
-Output format
--------------
+## Output format
 
 Bundler produces files typically called 'bundle_*.out' (we'll call
 these "bundle files").  With the default commands, Bundler outputs a
@@ -235,6 +196,7 @@ The bundle files contain the estimated scene and camera geometry have
 the following format:
 
 # Bundle file v0.3
+```
 <num_cameras> <num_points>   [two integers]
 <camera1>
 <camera2>
@@ -244,13 +206,13 @@ the following format:
 <point2>
 ...
 <pointM>
-
-Each camera entry <cameraI> contains the estimated camera intrinsics
+```
+Each camera entry `<cameraI>` contains the estimated camera intrinsics
 and extrinsics, and has the form:
 
-<f> <k1> <k2>   [the focal length, followed by two radial distortion coeffs]
-<R>             [a 3x3 matrix representing the camera rotation]
-<t>             [a 3-vector describing the camera translation]
+* `<f> <k1> <k2>`   [the focal length, followed by two radial distortion coeffs]
+* `<R>`            [a 3x3 matrix representing the camera rotation]
+* `<t>`             [a 3-vector describing the camera translation]
 
 The cameras are specified in the order they appear in the list of
 images.
@@ -262,28 +224,28 @@ Each point entry <pointI> has the form:
 
 The view list begins with the length of the list (i.e., the number of
 cameras the point is visible in).  The list is then given as a list of
-quadruplets <camera> <key> <x> <y>, where <camera> is a camera index,
-<key> the index of the SIFT keypoint where the point was detected in
-that camera, and <x> and <y> are the detected positions of that
+quadruplets `<camera> <key> <x> <y>`, where `<camera>` is a camera index,
+`<key>` the index of the SIFT keypoint where the point was detected in
+that camera, and `<x>` and `<y>` are the detected positions of that
 keypoint.  Both indices are 0-based (e.g., if camera 0 appears in the
 list, this corresponds to the first camera in the scene file and the
 first image in "list.txt").  
 
 We use a pinhole camera model; the parameters we estimate for each
-camera are a focal length (f), two radial distortion parameters (k1
-and k2), a rotation (R), and translation (t), as described in the file
-specification above.  The formula for projecting a 3D point X into a
-camera (R, t, f) is:
+camera are a focal length (`f`), two radial distortion parameters (`k1`
+and `k2`), a rotation (`R`), and translation (`t`), as described in the file
+specification above.  The formula for projecting a 3D point `X` into a
+camera `(R, t, f)` is:
 
     P = R * X + t       (conversion from world to camera coordinates)
     p = -P / P.z        (perspective division)
     p' = f * r(p) * p   (conversion to pixel coordinates)
 
-where P.z is the third coordinate of P.  In the last equation, r(p) is
+where `P.z` is the third coordinate of `P`.  In the last equation, `r(p)` is
 a function that computes a scaling factor to undo the radial
 distortion:
 
-r(p) = 1.0 + k1 * ||p||^2 + k2 * ||p||^4.
+`r(p) = 1.0 + k1 * ||p||^2 + k2 * ||p||^4`.
 
 This gives a projection in pixels, where the origin of the image is
 the center of the image, the positive x-axis points right, and the
@@ -302,76 +264,73 @@ and the 3D position of a camera is
 
     -R' * t .
 
-
---------------------
-Command-line options
---------------------
+## Command-line options
 
 Bundler has a number of internal parameters, so there are a large
 number of command-line options.  That said, we've found that a common
 set of parameters works well for most image collections we've tried,
 so it is probably safe to start with the recommended options (used by
-the RunBundler.sh script).  One very useful option is 
-"--options_file <file>", which tells Bundler to read a list of options
+the `RunBundler.sh` script).  One very useful option is 
+"`--options_file <file>`", which tells Bundler to read a list of options
 from a file.  The default options file created by RunBundler.sh
 includes the following:
 
-  --match_table matches.init.txt
+*  `--match_table matches.init.txt`
      [specifies the file where the match files are stored]
 
-  --output bundle.out
+*  `--output bundle.out`
      [specifies the name of the final output reconstruction]
 
-  --output_all bundle_
+*  `--output_all bundle_`
      [specifies that all intermediate reconstructions should be
       output to files with prefix "bundle_"]
 
-  --output_dir bundle
+*  `--output_dir bundle`
      [the directory all output files should be written to, typically
       called "bundle"]
 
-  --variable_focal_length
+*  `--variable_focal_length`
      [directs bundler to optimize for an independent focal length for
       each image]
 
-  --use_focal_estimate
+*  `--use_focal_estimate`
      [directs bundler to use the estimated focal lengths obtained from
       the Exif tags for each image]
 
-  --constrain_focal
+*  `--constrain_focal`
      [constrain the focal length of each camera to be close to the
       initial focal length estimate (from Exif tags).  This option
       adds penalty terms to the bundle adjustment objective function]
 
-  --constrain_focal_weight 0.0001
+*  `--constrain_focal_weight 0.0001`
      [weight on the penalty terms for the focal length constraints (a
       small weight is typically sufficient)]
 
-  --estimate_distortion
+*  `--estimate_distortion`
      [directs bundler to estimate radial distortion parameters for
       each image]
 
-  --run_bundle
+*  `--run_bundle`
      [run structure from motion (as opposed to other operations on
       existing reconstructions)]
 
 There are a number of other useful options in addition to the default
 ones listed above, including:
 
-  --init_pair1 <image_idx1>
-  --init_pair2 <image_idx2>
+*  `--init_pair1 <image_idx1>`
+*  `--init_pair2 <image_idx2>`
      [Specifies which images to use as the initial pair.  Very useful
       when the automatically chosen pair results in a bad
       reconstruction.]
 
-  --options_file <options_file>
+*  `--options_file <options_file>`
      [Read in a list of options from the specified file.]
 
-  --sift_binary <sift>
+*  `--sift_binary <sift>`
      [The location of the SIFT binary on your installation, e.g.,
      '/usr/bin/sift' or '/cygdrive/c/usr/bin/siftWin32.exe'.]
 
-  --add_images <add_list>
+*  `--add_images <add_list>`
      [Given an existing reconstruction specified with the --bundle
       option, attempts to add the images listed in the file <add_list>
       to the reconstruction, writing the results to the file
@@ -385,13 +344,10 @@ ones listed above, including:
       will try to extract features, but this requires that the
       --sift_binary option be set.]
 
-  --help
+*  `--help`
      [Print out the complete list of command-line options.]
 
-
-----------------
-Acknowledgements
-----------------
+## Acknowledgements
 
 This work was supported by Microsoft Research, the University of
 Washington Animation Research Labs, an Achievement Rewards for College
@@ -409,25 +365,22 @@ for his 'jhead' program.
 Thanks as well to Kathleen Tuite and Sebastian Koch for testing this
 distribution.
 
-
--------------------
-Contact information
--------------------
+## Contact information
 
 Questions?  Comments?  Bug reports?  Please see the FAQ at
 http://phototour.cs.washington.edu/bundler/faq.html, or send email to
 Noah Snavely at snavely@cs.washington.edu.
 
 
-[1] Noah Snavely, Steven M. Seitz, and Richard Szeliski.  Photo
+1. > Noah Snavely, Steven M. Seitz, and Richard Szeliski.  Photo
     Tourism: Exploring Photo Collections in 3D.  SIGGRAPH Conf. Proc.,
     2006.
 
-[2] Noah Snavely, Steven M. Seitz, Richard Szeliski.  Modeling the
+2. >Noah Snavely, Steven M. Seitz, Richard Szeliski.  Modeling the
     World from Internet Photo Collections. International Journal of
     Computer Vision (to appear), 2007.
 
-[3] M.I.A. Lourakis and A.A. Argyros.  The Design and Implementation
+3. >M.I.A. Lourakis and A.A. Argyros.  The Design and Implementation
     of a Generic Sparse Bundle Adjustment Software Package Based on
     the Levenberg-Marquardt Algorithm.  Tech.  Rep. 340, Inst. of
     Computer Science-FORTH, Heraklion, Crete, Greece. Available from
