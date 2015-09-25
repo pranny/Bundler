@@ -32,7 +32,7 @@
 #ifdef MACOS
   #include <sys/malloc.h> /* for array allocation */
 #else
-  #include <malloc.h>
+  #include <sys/malloc.h>
 #endif
 #include <math.h>   /* for 'fabs'           */
 
